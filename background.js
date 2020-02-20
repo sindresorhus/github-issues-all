@@ -22,7 +22,8 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
 		'https://github.com/*/*/issues?_pjax=%23js-repo-pjax-container',
 	],
 	types: [
-		"main_frame", "xmlhttprequest"
+		'main_frame',
+		'xmlhttprequest'
 	]
 }, [
 	'blocking'
