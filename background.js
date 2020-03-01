@@ -2,18 +2,12 @@
 
 chrome.webRequest.onBeforeRequest.addListener(function (details) {
 	if (details.method === 'GET') {
-		const isOpenQuery = 'q=is:open';
-		const pjaxQueryStart = details.url.search(/\?_pjax=%23js-repo-pjax-container/);
+		const searchParams = new URLSearchParams(details.url.searchParams);
+		searchParams.set('q', 'is:open');
+		const newUrl = new URL(details.url + '?' + searchParams.toString());
 
-		let newUrl;
-		if (pjaxQueryStart !== -1) {
-			newUrl = details.url.substr(0, pjaxQueryStart + 1) + isOpenQuery;
-		} else {
-			newUrl = details.url + '?' + isOpenQuery;
-		}
-			
 		return {
-			redirectUrl: newUrl
+			redirectUrl: newUrl.href
 		};
 	}
 }, {
